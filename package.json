@@ -8,7 +8,8 @@
     "test": "standard && mocha --require @babel/register",
     "build-server": "mkdir -p dist/server && babel src/server dist/server",
     "build-server-watch": "mkdir -p dist/server && babel --watch src/server --out-dir dist/server",
-    "start-server": "npm run build-server && nodemon --watch dist/server dist/server/index.js"
+    "start-server": "npm run build-server && nodemon --watch dist/server dist/server/index.js",
+    "serve": "node dist/server/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,10 @@
     "url": "https://github.com/nahudalla/chat-wedevelop-training/issues"
   },
   "homepage": "https://github.com/nahudalla/chat-wedevelop-training#readme",
-  "dependencies": {},
+  "dependencies": {
+    "sequelize": "^5.8.2",
+    "sqlite3": "^4.0.6"
+  },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
