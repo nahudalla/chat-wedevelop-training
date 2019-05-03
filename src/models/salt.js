@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 import { Model } from 'sequelize'
 
-export default function buildSalt (sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   class Salt extends Model {
     static async getPasswordSalt () {
       const lastSalt = await this.getLast()

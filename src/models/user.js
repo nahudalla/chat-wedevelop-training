@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 import { Model } from 'sequelize'
 
-export default function buildUser (sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   class User extends Model {
     async passwordMatches (value, models = sequelize.models) {
       const currentPasswordBuffer = Buffer.from(this.password, 'hex')

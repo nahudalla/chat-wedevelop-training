@@ -6,10 +6,10 @@
   "main": "src/server/index.js",
   "scripts": {
     "test": "standard && mocha --require @babel/register",
-    "build-server": "mkdir -p dist/server && babel src/server dist/server",
-    "build-server-watch": "mkdir -p dist/server && babel --watch src/server --out-dir dist/server",
-    "start-server": "npm run build-server && nodemon --watch dist/server dist/server/index.js",
-    "serve": "node dist/server/index.js"
+    "build": "mkdir -p dist && babel src dist",
+    "build-watch": "mkdir -p dist && babel --watch src --out-dir dist",
+    "start": "npm run build && nodemon --watch dist dist/index.js",
+    "serve": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
+    "babel-plugin-add-module-exports": "^1.0.2",
     "mocha": "^6.1.4",
     "nodemon": "^1.19.0",
     "sequelize-cli": "^5.4.0",
