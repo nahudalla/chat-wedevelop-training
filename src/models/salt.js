@@ -29,6 +29,14 @@ export default (sequelize, DataTypes) => {
     value: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, { sequelize, modelName: 'salt' })
 

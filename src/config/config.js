@@ -1,14 +1,18 @@
+const commonConfig = {
+  dialect: 'sqlite'
+}
+
 export default {
   development: {
-    dialect: 'sqlite',
+    ...commonConfig,
     storage: 'db/development.db'
   },
   test: {
-    dialect: 'sqlite',
+    ...commonConfig,
     storage: 'db/testing.db'
   },
   production: {
-    dialect: 'sqlite',
+    ...commonConfig,
     storage: 'db/production.db'
   }
 }

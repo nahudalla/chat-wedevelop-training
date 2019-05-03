@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "WeDevelop Training Program Chat App",
   "private": true,
-  "main": "src/server/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "standard && mocha --require @babel/register",
-    "build": "mkdir -p dist && babel src dist",
-    "build-watch": "mkdir -p dist && babel --watch src --out-dir dist",
+    "build": "mkdir -p dist && babel src --out-dir dist --copy-files",
+    "build-watch": "mkdir -p dist && babel --watch src --out-dir dist --copy-files",
     "start": "npm run build && nodemon --watch dist dist/index.js",
     "serve": "node dist/index.js"
   },
@@ -22,6 +22,10 @@
   },
   "homepage": "https://github.com/nahudalla/chat-wedevelop-training#readme",
   "dependencies": {
+    "apollo-server-express": "^2.4.8",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "graphql": "^14.2.1",
     "sequelize": "^5.8.2",
     "sqlite3": "^4.0.6"
   },
