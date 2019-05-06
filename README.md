@@ -52,7 +52,7 @@ npm start
 Then execute Babel in watch mode:
 
 ```
-npm run build-watch
+npm run dev
 ```
 
 ## License
