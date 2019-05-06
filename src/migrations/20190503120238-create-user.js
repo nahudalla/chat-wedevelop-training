@@ -1,8 +1,6 @@
-'use strict'
-
-module.exports = {
-  up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable('users', {
+export default {
+  up: (queryInterface, DataTypes) => {
+    return queryInterface.createTable('users', {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -24,24 +22,19 @@ module.exports = {
       password: {
         type: DataTypes.STRING,
         allowNull: false
-      }
-    })
-
-    await queryInterface.createTable('salts', {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: DataTypes.UUIDV4
       },
-      value: {
-        type: DataTypes.STRING,
+      createdAt: {
+        type: DataTypes.DATE,
         allowNull: false
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: true
       }
     })
   },
 
-  down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable('users')
-    await queryInterface.dropTable('salts')
+  down: (queryInterface, DataTypes) => {
+    return queryInterface.dropTable('users')
   }
 }
