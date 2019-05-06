@@ -1,10 +1,8 @@
+import 'dotenv/config'
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
 import { createServer } from 'http'
-import dotenv from 'dotenv'
 import schema from './schema'
-
-dotenv.config()
 
 const port = process.env.PORT || 7777
 

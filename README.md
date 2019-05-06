@@ -10,9 +10,13 @@ When finished, this repository will contain the implementation of a simple serve
 
 The code is meant to be run in a [Node.js v10](https://nodejs.org) environment and is written using the latest JavaScript features (as of writing) provided by [Babel](https://babeljs.io).
 
-Since this server is only meant as a practice exercise, [SQLite 3](https://sqlite.org) was chosen as database. Mappings to access data were created using [Sequelize.js](https://sequelizejs.com).
+[PostgreSQL](https://postgresql.org/) is used as the database engine. Mappings to access data were created using [Sequelize.js](https://sequelizejs.com). See [Configuration](#configuration) below for instructions to configure database access.
 
 [GraphQL](https://graphql.org) was chosen to expose an API to access the server, and was implemented using [Apollo Server](https://www.apollographql.com) on top of [Express](https://expressjs.com).
+
+## Configuration
+
+To configure database access, edit the file `src/config/config.js`. By default the database name `chat_wedevelop` is used and it is expected that the database exists. Connection options can be set through environment variables `DB_HOST`, `DB_USERNAME` and `DB_PASSWORD`. The server will automatically load environment variables from a `.env` file using the [dotenv](https://www.npmjs.com/package/dotenv) package.
 
 ## Installing and running
 
