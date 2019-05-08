@@ -1,7 +1,7 @@
-/* global jest, it, expect, describe */
+/* global jest, it, expect, describe, beforeAll */
 
 import addUserResolver from './addUser'
-import models from '../../models'
+import { user as User } from '../../models'
 
 jest.mock('../../models')
 
@@ -9,28 +9,50 @@ it('should export an object by default', () => {
   expect(addUserResolver).toBeInstanceOf(Object)
 })
 
-describe('default export', () => {
-  it('should have a Mutation property of Object type', () => {
-    expect(addUserResolver).toHaveProperty('Mutation', expect.any(Object))
+it('should have a Mutation property of Object type', () => {
+  expect(addUserResolver).toHaveProperty('Mutation', expect.any(Object))
+})
+
+describe('Mutation#addUser', () => {
+  it('should exist and be a function', () => {
+    expect(addUserResolver.Mutation).toHaveProperty('addUser', expect.any(Function))
   })
 
-  describe('Mutation property', () => {
-    it('should have an addUser function', () => {
-      expect(addUserResolver.Mutation).toHaveProperty('addUser', expect.any(Function))
+  describe('calling it', function () {
+    const data = { username: 'test', firstName: 'test', lastName: 'test', password: 'test' }
+    const options = { fields: ['username', 'firstName', 'lastName', 'password'] }
+    const userCreateMockReturnValue = { id: 'new-user-id', ...data, password: undefined }
+
+    const Mutation = addUserResolver.Mutation
+
+    let returnValue
+    beforeAll(() => {
+      User.create.mockReturnValueOnce(Promise.resolve(userCreateMockReturnValue))
+      returnValue = Mutation.addUser(null, data)
     })
 
-    describe('addUser ', function () {
-      it('should call User#create on models', () => {
-        const data = { username: 'test', firstName: 'test', lastName: 'test', password: 'test' }
-        const options = { fields: ['username', 'firstName', 'lastName', 'password'] }
+    it('should call User#create only once', () => {
+      expect(User.create).toHaveBeenCalledTimes(1)
+    })
 
-        addUserResolver.Mutation.addUser(null, data)
+    it('should call User#create with the right arguments', () => {
+      expect(User.create).toHaveBeenCalledWith(data, options)
+    })
 
-        const userCreate = models.user.create
+    it('should be an async function', () => {
+      expect(returnValue).toBeInstanceOf(Promise)
+    })
 
-        expect(userCreate).toHaveBeenCalledTimes(1)
-        expect(userCreate).toHaveBeenCalledWith(data, options)
-      })
+    it('should return the new user data', () => {
+      expect(returnValue).resolves.toEqual(userCreateMockReturnValue)
+    })
+
+    it('should return a Promise rejection when User#create rejects', () => {
+      User.create.mockReturnValueOnce(Promise.reject(new Error('test-rejection')))
+
+      const returnValue = Mutation.addUser(null, data)
+
+      expect(returnValue).rejects.toBeInstanceOf(Error)
     })
   })
 })
