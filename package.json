@@ -5,7 +5,7 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
-    "test": "standard && mocha --require @babel/register",
+    "test": "standard && jest",
     "build": "mkdir -p dist && babel src --out-dir dist --copy-files",
     "dev": "mkdir -p dist && babel --watch src --out-dir dist --copy-files",
     "start": "npm run build && nodemon --watch dist dist/index.js",
@@ -35,9 +35,10 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "babel-plugin-add-module-exports": "^1.0.2",
-    "mocha": "^6.1.4",
+    "jest": "^24.8.0",
     "nodemon": "^1.19.0",
     "sequelize-cli": "^5.4.0",
+    "sqlite3": "^4.0.6",
     "standard": "^12.0.1"
   }
 }
