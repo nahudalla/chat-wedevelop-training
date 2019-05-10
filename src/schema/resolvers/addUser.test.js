@@ -39,8 +39,8 @@ describe('Mutation#addUser', () => {
       expect(User.create).toHaveBeenCalledWith(data, options)
     })
 
-    it('should be an async function', () => {
-      expect(returnValue).toBeInstanceOf(Promise)
+    it('should return a Promise-like object', () => {
+      expect(returnValue).toMatchObject(Promise.prototype)
     })
 
     it('should return the new user data', () => {
