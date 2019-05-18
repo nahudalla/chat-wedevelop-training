@@ -4,6 +4,8 @@ import { ApolloServer } from 'apollo-server-express'
 import { createServer } from 'http'
 import schema from './schema'
 
+import contextBuilder from './apolloContextBuilder'
+
 const port = process.env.PORT || 7777
 
 const expressApp = express()
@@ -12,7 +14,8 @@ const apolloServer = new ApolloServer({
   ...schema,
   instrospection: true,
   playground: true,
-  tracing: true
+  tracing: true,
+  context: contextBuilder
 })
 
 apolloServer.applyMiddleware({ app: expressApp })
