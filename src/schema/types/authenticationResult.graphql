@@ -1,0 +1,5 @@
+type AuthenticationResult {
+  user: User
+  jwt: String
+  authError: String
+}
