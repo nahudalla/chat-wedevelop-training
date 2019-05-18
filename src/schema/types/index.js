@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs'
 import { gql } from 'apollo-server-express'
 
-const types = []
+const types = [ generateEmptyQueryType(), generateEmptyMutationType() ]
 
 fs
   .readdirSync(__dirname)
@@ -16,3 +16,15 @@ fs
   })
 
 export default types
+
+function generateEmptyQueryType () {
+  return gql`type Query {
+    _empty: String
+  }`
+}
+
+function generateEmptyMutationType () {
+  return gql`type Mutation {
+    _empty: String
+  }`
+}
