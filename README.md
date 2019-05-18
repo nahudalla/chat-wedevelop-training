@@ -35,24 +35,26 @@ npm run build
 npx sequelize db:migrate
 ```
 
-Finally, run the server using the `serve` script, the GraphQL endpoing will be available at [http://localhost:7777/graphql](http://localhost:7777/graphql):
-
-```
-npm run serve
-```
-
-## Development
-
-For development, run the following commands in two separate consoles. First, build and execute the server:
+Finally, run the server using the `start` script, the GraphQL endpoing will be available at [http://localhost:7777/graphql](http://localhost:7777/graphql):
 
 ```
 npm start
 ```
 
-Then execute Babel in watch mode:
+## Development
+
+For development, execute:
 
 ```
 npm run dev
+```
+
+## Tests
+
+To run tests, execute:
+
+```
+npm test
 ```
 
 ## License

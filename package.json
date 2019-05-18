@@ -6,10 +6,10 @@
   "main": "src/index.js",
   "scripts": {
     "test": "standard && jest",
-    "build": "mkdir -p dist && babel src --out-dir dist --copy-files",
-    "dev": "mkdir -p dist && babel --watch src --out-dir dist --copy-files",
-    "start": "npm run build && nodemon --watch dist dist/index.js",
-    "serve": "node dist/index.js"
+    "dev": "nodemon -w src --exec \"babel-node src\"",
+    "build": "npm run cleanup && babel src -D -d dist --copy-files",
+    "start": "node dist/index.js",
+    "cleanup": "rm -rf dist"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "babel-plugin-add-module-exports": "^1.0.2",
