@@ -1,3 +1,0 @@
-extend type Mutation {
-  addUser(username:String!, firstName:String!, lastName:String!, password:String!):User!
-}

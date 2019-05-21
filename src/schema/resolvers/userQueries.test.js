@@ -1,6 +1,6 @@
 /* global jest, it, expect, describe, beforeAll */
 
-import queryResolver from './query'
+import queryResolver from './userQueries'
 import { user as User } from '../../models'
 
 jest.mock('../../models')
