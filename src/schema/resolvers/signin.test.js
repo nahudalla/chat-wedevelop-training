@@ -66,8 +66,8 @@ function testSigninWithInvalidCredentials (Error) {
 
   testShouldCallUserSignin()
 
-  it('should return an object with an "error" property', () => {
-    expect(result).toHaveProperty('error', error.message)
+  it('should return an object with an "authError" property', () => {
+    expect(result).toHaveProperty('authError', error.message)
   })
 
   it('should return an object without a "jwt" property', () => {

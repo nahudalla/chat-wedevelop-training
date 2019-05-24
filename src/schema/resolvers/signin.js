@@ -7,7 +7,7 @@ export default {
       try {
         return await context.models.user.signin(username, password)
       } catch (e) {
-        return { error: e.message }
+        return { authError: e.message }
       }
     }
   }
