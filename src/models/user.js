@@ -1,13 +1,53 @@
 import crypto from 'crypto'
 import { Model } from 'sequelize'
+import jwtBuilder from '../JWTBuilder'
+import UsernameNotFoundError from '../errors/UsernameNotFoundError'
+import InvalidPasswordError from '../errors/InvalidPasswordError'
 
-export default (sequelize, DataTypes) => {
+export function buildUserModel (sequelizeModels) {
   class User extends Model {
-    async passwordMatches (value, models = sequelize.models) {
+    static async signin (username, password) {
+      const user = await User.findByUsername(username)
+
+      await user.validatePassword(password)
+
+      const jwt = await user.generateJWT()
+
+      return { user, jwt }
+    }
+
+    static async findByUsername (username) {
+      const user = await User.findOne({ where: { username } })
+
+      if (!user) {
+        throw new UsernameNotFoundError('Could not find a User with username: ' + username)
+      }
+
+      return user
+    }
+
+    async validatePassword (password) {
+      const passwordIsValid = await this.passwordMatches(password)
+
+      if (!passwordIsValid) {
+        throw new InvalidPasswordError('Invalid password')
+      }
+    }
+
+    async passwordMatches (value, models = sequelizeModels) {
       const currentPasswordBuffer = Buffer.from(this.password, 'hex')
       const encryptedPasswordBuffer = User.getEncryptedPasswordBuffer(value, models)
 
       return encryptedPasswordBuffer.equals(currentPasswordBuffer)
+    }
+
+    async generateJWT () {
+      const { password, ...userWithoutPassword } = await this.getAsPlainObject()
+      return jwtBuilder(userWithoutPassword)
+    }
+
+    getAsPlainObject () {
+      return this.get({ plain: true })
     }
 
     static async hashPasswordHook (user) {
@@ -18,12 +58,17 @@ export default (sequelize, DataTypes) => {
       user.password = encryptedPasswordBuffer.toString('hex')
     }
 
-    static async getEncryptedPasswordBuffer (plainPassword, models = sequelize.models) {
+    static async getEncryptedPasswordBuffer (plainPassword, models = sequelizeModels) {
       const salt = await models.salt.getPasswordSalt()
-
       return crypto.scryptSync(plainPassword, salt.value, 64)
     }
   }
+
+  return User
+}
+
+export default (sequelize, DataTypes) => {
+  const User = buildUserModel(sequelize.models)
 
   User.init({
     id: {
