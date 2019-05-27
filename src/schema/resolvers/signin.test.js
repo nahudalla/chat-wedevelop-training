@@ -3,8 +3,7 @@
 import 'dotenv/config'
 
 import resolver from './signin'
-import InvalidPasswordError from '../../errors/InvalidPasswordError'
-import UsernameNotFoundError from '../../errors/UsernameNotFoundError'
+import InvalidCredentialsError from '../../errors/InvalidCredentialsError'
 import mockedModels from '../../models'
 
 jest.mock('../../models')
@@ -25,8 +24,7 @@ describe('Mutation#signin', () => {
   })
 
   describe('calling it with valid credentials', testSigninWithValidCredentials)
-  describe('calling it with invalid username', testSigninWithInvalidUsername)
-  describe('calling it with invalid password', testSigninWithInvalidPassword)
+  describe('calling it with invalid credentials', testSigninWithInvalidCredentials)
 })
 
 function testSigninWithValidCredentials () {
@@ -46,16 +44,8 @@ function testSigninWithValidCredentials () {
   })
 }
 
-function testSigninWithInvalidUsername () {
-  testSigninWithInvalidCredentials(UsernameNotFoundError)
-}
-
-function testSigninWithInvalidPassword () {
-  testSigninWithInvalidCredentials(InvalidPasswordError)
-}
-
-function testSigninWithInvalidCredentials (Error) {
-  const error = new Error('error message')
+function testSigninWithInvalidCredentials () {
+  const error = new InvalidCredentialsError()
 
   let result
   beforeAll(async () => {

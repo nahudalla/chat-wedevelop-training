@@ -1,8 +1,7 @@
 import crypto from 'crypto'
 import { Model } from 'sequelize'
 import jwtBuilder from '../JWTBuilder'
-import UsernameNotFoundError from '../errors/UsernameNotFoundError'
-import InvalidPasswordError from '../errors/InvalidPasswordError'
+import InvalidCredentialsError from '../errors/InvalidCredentialsError'
 
 export function buildUserModel (sequelizeModels) {
   class User extends Model {
@@ -20,7 +19,7 @@ export function buildUserModel (sequelizeModels) {
       const user = await User.findOne({ where: { username } })
 
       if (!user) {
-        throw new UsernameNotFoundError('Could not find a User with username: ' + username)
+        throw new InvalidCredentialsError()
       }
 
       return user
@@ -30,7 +29,7 @@ export function buildUserModel (sequelizeModels) {
       const passwordIsValid = await this.passwordMatches(password)
 
       if (!passwordIsValid) {
-        throw new InvalidPasswordError('Invalid password')
+        throw new InvalidCredentialsError()
       }
     }
 

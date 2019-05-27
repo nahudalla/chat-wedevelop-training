@@ -5,8 +5,7 @@ import { Model } from 'sequelize'
 import jwtBuilder from '../JWTBuilder'
 import { buildUserModel } from './user.js'
 import models from '../models'
-import UsernameNotFoundError from '../errors/UsernameNotFoundError'
-import InvalidPasswordError from '../errors/InvalidPasswordError'
+import InvalidCredentialsError from '../errors/InvalidCredentialsError'
 
 jest.mock('../JWTBuilder')
 
@@ -87,7 +86,7 @@ function testUserSigninWithInvalidPassword () {
   let error
   beforeAll(async () => {
     fakeUserInstance.validatePassword.mockReturnValueOnce(
-      Promise.reject(new InvalidPasswordError())
+      Promise.reject(new InvalidCredentialsError())
     )
 
     try {
@@ -101,8 +100,8 @@ function testUserSigninWithInvalidPassword () {
     expect(fakeUserInstance.generateJWT).not.toHaveBeenCalled()
   })
 
-  it('should reject to an instance of InvalidPasswordError', () => {
-    expect(error).toBeInstanceOf(InvalidPasswordError)
+  it('should reject to an instance of InvalidCredentialsError', () => {
+    expect(error).toBeInstanceOf(InvalidCredentialsError)
   })
 }
 
@@ -121,8 +120,8 @@ function testUserSigninWithInvalidUsername () {
     }
   })
 
-  it('should reject to an instance of UsernameNotFoundError', () => {
-    expect(error).toBeInstanceOf(UsernameNotFoundError)
+  it('should reject to an instance of InvalidCredentialsError', () => {
+    expect(error).toBeInstanceOf(InvalidCredentialsError)
   })
 }
 
@@ -137,7 +136,7 @@ function testSigninValidatesCredentials (fakeUserInstance) {
     if (fakeUserInstance) {
       userPromise = Promise.resolve(fakeUserInstance)
     } else {
-      userPromise = Promise.reject(new UsernameNotFoundError())
+      userPromise = Promise.reject(new InvalidCredentialsError())
     }
 
     User.findByUsername.mockReturnValueOnce(userPromise)
@@ -319,8 +318,8 @@ function testUserFindByUsernameInvalid () {
 
   testShouldCallFindOne()
 
-  it('should throw an instance of UsernameNotFoundError', () => {
-    expect(error).toBeInstanceOf(UsernameNotFoundError)
+  it('should throw an instance of InvalidCredentialsError', () => {
+    expect(error).toBeInstanceOf(InvalidCredentialsError)
   })
 }
 
@@ -386,8 +385,8 @@ function testUserValidatePasswordInvalid () {
     }
   })
 
-  it('should throw an instance of InvalidPasswordError', () => {
-    expect(error).toBeInstanceOf(InvalidPasswordError)
+  it('should throw an instance of InvalidCredentialsError', () => {
+    expect(error).toBeInstanceOf(InvalidCredentialsError)
   })
 }
 
