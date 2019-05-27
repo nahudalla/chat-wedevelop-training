@@ -10,7 +10,7 @@ const JWTDuration = '10d'
 process.env.JWT_SECRET = JWTSecret
 process.env.JWT_DURATION = JWTDuration
 
-const JWTBuilder = require('./JWTBuilder')
+const JWTBuilder = require('./JWTBuilder').default
 
 it('return a function by default', () => {
   expect(JWTBuilder).toBeInstanceOf(Function)

@@ -7,7 +7,7 @@ export default ({ id, ...payload }) => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_DURATION, subject: id })
 }
 
-function getJWTSecret () {
+export function getJWTSecret () {
   const secret = process.env.JWT_SECRET
 
   if (!secret) {
