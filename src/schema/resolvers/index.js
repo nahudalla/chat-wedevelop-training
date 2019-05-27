@@ -4,7 +4,7 @@ import deepmerge from 'deepmerge'
 
 const resolvers = fs
   .readdirSync(__dirname)
-  .filter(file => file.indexOf('.') !== 0 && file !== 'index.js' && !file.endsWith('.test.js'))
+  .filter(file => file !== 'index.js' && !file.endsWith('.test.js'))
   .map(file => path.join(__dirname, file))
   .reduce((acc, resolverPath) => deepmerge(acc, require(resolverPath)), {})
 
