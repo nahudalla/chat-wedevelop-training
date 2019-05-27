@@ -8,6 +8,10 @@ export function buildUserModel (sequelizeModels) {
     static async signin (username, password) {
       const user = await User.findByUsername(username)
 
+      if (!user) {
+        throw new InvalidCredentialsError()
+      }
+
       await user.validatePassword(password)
 
       const jwt = await user.generateJWT()
@@ -15,14 +19,8 @@ export function buildUserModel (sequelizeModels) {
       return { user, jwt }
     }
 
-    static async findByUsername (username) {
-      const user = await User.findOne({ where: { username } })
-
-      if (!user) {
-        throw new InvalidCredentialsError()
-      }
-
-      return user
+    static findByUsername (username) {
+      return User.findOne({ where: { username } })
     }
 
     async validatePassword (password) {

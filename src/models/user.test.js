@@ -100,7 +100,7 @@ function testUserSigninWithInvalidPassword () {
     expect(fakeUserInstance.generateJWT).not.toHaveBeenCalled()
   })
 
-  it('should reject to an instance of InvalidCredentialsError', () => {
+  it('should throw an instance of InvalidCredentialsError', () => {
     expect(error).toBeInstanceOf(InvalidCredentialsError)
   })
 }
@@ -120,7 +120,7 @@ function testUserSigninWithInvalidUsername () {
     }
   })
 
-  it('should reject to an instance of InvalidCredentialsError', () => {
+  it('should throw an instance of InvalidCredentialsError', () => {
     expect(error).toBeInstanceOf(InvalidCredentialsError)
   })
 }
@@ -305,21 +305,17 @@ function testUserFindByUsernameInvalid () {
   const User = models.user
   const { username } = testUserData
 
-  let error
+  let result
   beforeAll(async () => {
     User.findOne.mockReturnValueOnce(Promise.resolve(null))
 
-    try {
-      await User.findByUsername(username)
-    } catch (e) {
-      error = e
-    }
+    result = await User.findByUsername(username)
   })
 
   testShouldCallFindOne()
 
-  it('should throw an instance of InvalidCredentialsError', () => {
-    expect(error).toBeInstanceOf(InvalidCredentialsError)
+  it('should return null', () => {
+    expect(result).toBeNull()
   })
 }
 
