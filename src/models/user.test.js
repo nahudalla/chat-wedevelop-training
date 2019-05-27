@@ -208,10 +208,10 @@ function testUserGenerateJWT () {
       expect(jwtBuilder).toHaveBeenCalledTimes(1)
     })
 
-    it('should call JWTBuilder with the object from User#getAsPlainObject, without password', () => {
-      const { password, ...userWithoutPassword } = testUserData
+    it('should call JWTBuilder with only specific fields of the object from User#getAsPlainObject', () => {
+      const { username, firstName, lastName } = testUserData
 
-      expect(jwtBuilder).toHaveBeenCalledWith(userWithoutPassword)
+      expect(jwtBuilder).toHaveBeenCalledWith({ username, firstName, lastName })
     })
 
     it('should return the return value of JWTBuilder', () => {
