@@ -35,7 +35,7 @@ export function buildUserModel (sequelizeModels) {
 
     async passwordMatches (value, models = sequelizeModels) {
       const currentPasswordBuffer = Buffer.from(this.password, 'hex')
-      const encryptedPasswordBuffer = User.getEncryptedPasswordBuffer(value, models)
+      const encryptedPasswordBuffer = await User.getEncryptedPasswordBuffer(value, models)
 
       return encryptedPasswordBuffer.equals(currentPasswordBuffer)
     }
