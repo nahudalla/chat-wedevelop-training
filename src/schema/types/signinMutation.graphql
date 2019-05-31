@@ -1,0 +1,9 @@
+input SigninInput {
+  username: String!
+  password: String!
+}
+
+extend type Mutation {
+  signin(data: SigninInput!): AuthenticationResult!
+}
+

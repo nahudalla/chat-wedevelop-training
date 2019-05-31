@@ -1,5 +1,6 @@
 /* global jest, it, expect, describe, beforeAll */
 
+import 'dotenv/config'
 import queryResolver from './userQueries'
 import { user as User } from '../../models'
 
