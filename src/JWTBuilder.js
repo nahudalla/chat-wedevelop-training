@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken'
 const JWT_SECRET = getJWTSecret()
 const JWT_DURATION = getJWTDuration()
 
-export default (payload) => {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_DURATION })
+export default ({ id, ...payload }) => {
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_DURATION, sub: id })
 }
 
 function getJWTSecret () {

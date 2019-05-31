@@ -17,7 +17,7 @@ it('return a function by default', () => {
 })
 
 describe('calling it', () => {
-  const tokenPayload = { id: 123 }
+  const tokenPayload = { id: 123, username: 'test' }
   const fakeToken = 'fake token'
 
   let result
@@ -30,16 +30,18 @@ describe('calling it', () => {
     expect(jwt.sign).toHaveBeenCalledTimes(1)
   })
 
-  it('should call jsonwebtoken#sign with the passed payload as its first parameter', () => {
-    expect(jwt.sign.mock.calls[0][0]).toBe(tokenPayload)
+  it('should call jsonwebtoken#sign with the passed payload, without id, as its first parameter', () => {
+    const { id, ...payload } = tokenPayload
+    expect(jwt.sign.mock.calls[0][0]).toStrictEqual(payload)
   })
 
   it('should call jsonwebtoken#sign with the configured secret as its second parameter', () => {
     expect(jwt.sign.mock.calls[0][1]).toBe(JWTSecret)
   })
 
-  it('should call jsonwebtoken#sign with the configured duration in the options object', () => {
-    expect(jwt.sign.mock.calls[0][2]).toEqual({ expiresIn: JWTDuration })
+  it('should call jsonwebtoken#sign with the configured duration and sub property set to the id in the options object', () => {
+    const { id } = tokenPayload
+    expect(jwt.sign.mock.calls[0][2]).toStrictEqual({ expiresIn: JWTDuration, sub: id })
   })
 
   it('should return the token returned by jsonwebtoken#sign', () => {
