@@ -4,7 +4,7 @@ const JWT_SECRET = getJWTSecret()
 const JWT_DURATION = getJWTDuration()
 
 export default ({ id, ...payload }) => {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_DURATION, sub: id })
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_DURATION, subject: id })
 }
 
 function getJWTSecret () {
