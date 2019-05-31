@@ -38,7 +38,7 @@ describe('calling the builder', () => {
   })
 
   describe('with a user', () => {
-    const fakeUserFromToken = { id: 'fake id' }
+    const fakeUserFromToken = { sub: 'fake id', username: 'fake username' }
 
     let context
     beforeAll(() => {
@@ -60,7 +60,7 @@ describe('calling the builder', () => {
 
       it('should call User#findByPk once', () => expect(models.user.findByPk).toHaveBeenCalledTimes(1))
       it('should call User#findByPk with the id from the passed user', () => {
-        expect(models.user.findByPk).toHaveBeenCalledWith(fakeUserFromToken.id)
+        expect(models.user.findByPk).toHaveBeenCalledWith(fakeUserFromToken.sub)
       })
       it('should return the user obtained from User#findByPk', () => expect(result).toBe(fakeUserFromDB))
     })

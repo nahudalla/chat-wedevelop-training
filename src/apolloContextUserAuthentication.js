@@ -8,7 +8,7 @@ export default (requestContext) => {
       return user !== null
     },
     getAuthenticatedUser () {
-      return user && models.user.findByPk(user.id)
+      return user && models.user.findByPk(user.sub)
     }
   }
 }
