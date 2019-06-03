@@ -10,7 +10,7 @@ const JWTDuration = '10d'
 process.env.JWT_SECRET = JWTSecret
 process.env.JWT_DURATION = JWTDuration
 
-const JWTBuilder = require('./JWTBuilder')
+const JWTBuilder = require('./JWTBuilder').default
 
 it('return a function by default', () => {
   expect(JWTBuilder).toBeInstanceOf(Function)
@@ -41,7 +41,7 @@ describe('calling it', () => {
 
   it('should call jsonwebtoken#sign with the configured duration and sub property set to the id in the options object', () => {
     const { id } = tokenPayload
-    expect(jwt.sign.mock.calls[0][2]).toStrictEqual({ expiresIn: JWTDuration, sub: id })
+    expect(jwt.sign.mock.calls[0][2]).toStrictEqual({ expiresIn: JWTDuration, subject: id })
   })
 
   it('should return the token returned by jsonwebtoken#sign', () => {

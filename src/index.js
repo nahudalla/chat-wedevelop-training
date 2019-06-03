@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import passportMiddleware from './passportMiddleware'
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
 import { createServer } from 'http'
@@ -18,6 +19,7 @@ const apolloServer = new ApolloServer({
   context: contextBuilder
 })
 
+expressApp.use(passportMiddleware)
 apolloServer.applyMiddleware({ app: expressApp })
 apolloServer.installSubscriptionHandlers(httpServer)
 

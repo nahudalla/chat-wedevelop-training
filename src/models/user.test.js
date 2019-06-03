@@ -190,7 +190,6 @@ function testUserGenerateJWT () {
     beforeAll(async () => {
       jest.spyOn(userInstance, 'getAsPlainObject')
 
-      userInstance.getAsPlainObject.mockReturnValueOnce(testUserData)
       jwtBuilder.mockReturnValueOnce(fakeToken)
 
       result = await userInstance.generateJWT()
@@ -209,9 +208,9 @@ function testUserGenerateJWT () {
     })
 
     it('should call JWTBuilder with only specific fields of the object from User#getAsPlainObject', () => {
-      const { username, firstName, lastName } = testUserData
+      const { id, username, firstName, lastName } = userInstance.getAsPlainObject()
 
-      expect(jwtBuilder).toHaveBeenCalledWith({ username, firstName, lastName })
+      expect(jwtBuilder).toHaveBeenCalledWith({ id, username, firstName, lastName })
     })
 
     it('should return the return value of JWTBuilder', () => {

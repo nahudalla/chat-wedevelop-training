@@ -39,8 +39,8 @@ export function buildUserModel (sequelizeModels) {
     }
 
     async generateJWT () {
-      const { username, firstName, lastName } = await this.getAsPlainObject()
-      return jwtBuilder({ username, firstName, lastName })
+      const { id, username, firstName, lastName } = await this.getAsPlainObject()
+      return jwtBuilder({ id, username, firstName, lastName })
     }
 
     getAsPlainObject () {
