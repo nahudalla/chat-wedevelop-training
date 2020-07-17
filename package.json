@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/nahudalla/chat-wedevelop-training#readme",
   "dependencies": {
-    "apollo-server-express": "^2.4.8",
+    "apollo-server-express": "^2.14.2",
     "deepmerge": "^3.2.0",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
